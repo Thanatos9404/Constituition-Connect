@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Constitution Connect Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Login Page -->
+        <div id="login-page">
+            <h1>Welcome to Constitution Connect Quiz</h1>
+            <form id="login-form">
+                <input type="text" id="username" placeholder="Enter your name" required>
+                <button type="button" id="start-btn">Start Quiz</button>
+            </form>
+        </div>
+
+        <!-- Quiz Page -->
+        <div id="quiz-page" style="display: none;">
+            <h1>Constitution Connect Quiz</h1>
+            <div id="quiz-box">
+                <div id="question">Loading question...</div>
+                <div class="options">
+                    <label><input type="radio" name="option" id="optionA" onclick="checkAnswer('A')"> <span>A</span></label><br>
+                    <label><input type="radio" name="option" id="optionB" onclick="checkAnswer('B')"> <span>B</span></label><br>
+                    <label><input type="radio" name="option" id="optionC" onclick="checkAnswer('C')"> <span>C</span></label><br>
+                    <label><input type="radio" name="option" id="optionD" onclick="checkAnswer('D')"> <span>D</span></label>
+                </div>
+                <div id="result"></div>
+                <div id="score">Score: 0</div>
+                <button id="next" onclick="nextQuestion()" disabled>Next Question</button>
+            </div>
+            <div id="leaderboard">
+                <h2>Leaderboard</h2>
+                <ul id="leaderboard-list"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

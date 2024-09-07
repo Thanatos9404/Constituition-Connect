@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="form-container">
+        <h2>Login</h2>
+        <form id="login-form">
+            <label for="email">Email/Mobile</label>
+            <input type="text" id="email" placeholder="Enter email or mobile number" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter password" required>
+
+            <div>
+                <input type="checkbox" id="remember"> Remember Me
+            </div>
+
+            <button type="button" onclick="login()">Login</button>
+        </form>
+        <p>Don't have an account? <a href="signup.html">Sign up here</a>.</p>
+    </div>
+
+    <script>
+        // Login Function
+        function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Retrieve user details from localStorage
+            const storedUser = localStorage.getItem(email);
+            if (!storedUser) {
+                alert("Account doesn't exist! Please sign up.");
+                return;
+            }
+
+            const user = JSON.parse(storedUser);
+
+            // Validate password
+            if (user.password === password) {
+                alert("Login successful!");
+                window.location.href = 'quiz.html'; // Redirect to quiz page
+            } else {
+                alert("Incorrect password!");
+            }
+        }
+    </script>
+</body>
+</html>

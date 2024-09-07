@@ -1,0 +1,212 @@
+// Sample Questions Array
+const questions = [
+    {
+        question: "Who is known as the father of the Indian Constitution?",
+        options: ["Jawaharlal Nehru", "Dr. B.R. Ambedkar", "Mahatma Gandhi", "Sardar Patel"],
+        answer: "Dr. B.R. Ambedkar"
+    },
+    {
+        question: "In which year was the Constitution of India adopted?",
+        options: ["1947", "1950", "1952", "1956"],
+        answer: "1950"
+    },
+    {
+        question: "What is the Preamble of the Constitution?",
+        options: ["The introduction to the Constitution", "A legal clause", "A historical document", "A government order"],
+        answer: "The introduction to the Constitution"
+    },
+    {
+        question: "How many articles were there originally in the Indian Constitution?",
+        options: ["395", "400", "410", "420"],
+        answer: "395"
+    },
+    {
+        question: "What does the term 'Republic' mean in the context of India?",
+        options: ["A country with a king", "A country with a president", "A country with a prime minister", "A country with a dictatorship"],
+        answer: "A country with a president"
+    },
+    {
+        question: "What is the Union List in the Indian Constitution?",
+        options: ["List of powers reserved for states", "List of powers shared between center and states", "List of powers exclusively for the center", "List of concurrent powers"],
+        answer: "List of powers exclusively for the center"
+    },
+    {
+        question: "Who appoints the Chief Justice of India?",
+        options: ["The President of India", "The Prime Minister", "The Parliament", "The Supreme Court judges"],
+        answer: "The President of India"
+    },
+    {
+        question: "What are Fundamental Rights?",
+        options: ["Rights guaranteed by the Constitution to all citizens", "Rights given only to government officials", "Privileges for specific groups", "Temporary legal provisions"],
+        answer: "Rights guaranteed by the Constitution to all citizens"
+    },
+    {
+        question: "Which article of the Constitution guarantees freedom of speech and expression?",
+        options: ["Article 14", "Article 19", "Article 21", "Article 32"],
+        answer: "Article 19"
+    },
+    {
+        question: "What is the role of the Election Commission of India?",
+        options: ["To oversee elections and ensure they are conducted fairly", "To enact election laws", "To appoint election judges", "To conduct educational programs about voting"],
+        answer: "To oversee elections and ensure they are conducted fairly"
+    },
+    {
+        question: "What is the significance of the 42nd Amendment?",
+        options: ["It increased the powers of the Parliament", "It introduced the concept of 'Secular' in the Preamble", "It removed the Fundamental Rights", "It amended the election process"],
+        answer: "It introduced the concept of 'Secular' in the Preamble"
+    },
+    {
+        question: "How is the Prime Minister of India selected?",
+        options: ["By direct election", "By appointment by the President", "By the majority party in the Lok Sabha", "By the Rajya Sabha"],
+        answer: "By the majority party in the Lok Sabha"
+    },
+    {
+        question: "What is Article 370 of the Indian Constitution?",
+        options: ["Provision for special status to Jammu and Kashmir", "Right to education", "Fundamental Duties", "Judicial Review"],
+        answer: "Provision for special status to Jammu and Kashmir"
+    },
+    {
+        question: "What does the term 'Secular' mean in the Indian Constitution?",
+        options: ["Separation of religion and state", "Promoting a particular religion", "Encouraging religious conflicts", "Recognition of all religions equally"],
+        answer: "Recognition of all religions equally"
+    },
+    {
+        question: "What is the maximum strength of the Lok Sabha?",
+        options: ["545", "552", "500", "550"],
+        answer: "552"
+    },
+    {
+        question: "What is the role of the Governor in a state?",
+        options: ["Chief executive officer", "Legislative leader", "Judicial head", "Federal representative"],
+        answer: "Federal representative"
+    },
+    {
+        question: "What is the right to constitutional remedies?",
+        options: ["The right to challenge any law or action violating Fundamental Rights", "The right to seek compensation for damages", "The right to appeal to higher courts", "The right to free legal aid"],
+        answer: "The right to challenge any law or action violating Fundamental Rights"
+    },
+    {
+        question: "How many Fundamental Duties are listed in the Indian Constitution?",
+        options: ["8", "10", "12", "15"],
+        answer: "11"
+    },
+    {
+        question: "What is the Directive Principles of State Policy?",
+        options: ["Guidelines for the state to follow in policy-making", "Mandatory laws for the government", "Judicial recommendations", "Economic policies for corporations"],
+        answer: "Guidelines for the state to follow in policy-making"
+    },
+    {
+        question: "What does 'Justice' in the Preamble mean?",
+        options: ["Fair treatment for all citizens", "Punishment for crimes", "Legal procedures", "Economic equality"],
+        answer: "Fair treatment for all citizens"
+    },
+    {
+        question: "What is the basic structure doctrine?",
+        options: ["The Constitution cannot be altered in its basic structure", "The Constitution can be changed by any amendment", "Only the Supreme Court can interpret the Constitution", "The basic structure is determined by the Parliament"],
+        answer: "The Constitution cannot be altered in its basic structure"
+    }
+];
+
+let currentQuestion = {};
+let currentIndex = 0;
+let score = 0;
+let askedQuestions = [];
+let leaderboard = [];
+let selected = false;
+
+// Start the quiz (triggered after login)
+function startQuiz() {
+    const username = document.getElementById('username').value;
+    
+    if (username.trim() === "") {
+        alert("Please enter your name.");
+        return;
+    }
+
+    document.getElementById('login-page').style.display = 'none';
+    document.getElementById('quiz-page').style.display = 'block';
+
+    selectQuestions();
+    loadQuestion();
+}
+
+// Function to shuffle and select questions
+function selectQuestions() {
+    askedQuestions = questions.sort(() => 0.5 - Math.random()).slice(0, 20); // Select 20 random questions
+}
+
+// Display the current question and options
+function loadQuestion() {
+    selected = false; // Reset selection status
+
+    if (currentIndex >= askedQuestions.length) {
+        document.getElementById('question').textContent = 'Quiz Over!';
+        document.getElementById('result').textContent = `Your final score is ${score}`;
+        updateLeaderboard();
+        return;
+    }
+
+    currentQuestion = askedQuestions[currentIndex];
+    document.getElementById('question').textContent = currentQuestion.question;
+
+    const options = currentQuestion.options;
+    document.getElementById('optionA').nextElementSibling.textContent = options[0];
+    document.getElementById('optionB').nextElementSibling.textContent = options[1];
+    document.getElementById('optionC').nextElementSibling.textContent = options[2];
+    document.getElementById('optionD').nextElementSibling.textContent = options[3];
+
+    document.querySelectorAll('input[name="option"]').forEach(input => {
+        input.checked = false; // Uncheck all options
+        input.disabled = false; // Enable options
+    });
+
+    document.getElementById('result').textContent = '';
+    document.getElementById('next').disabled = true;
+}
+
+// Check if the selected answer is correct
+function checkAnswer(option) {
+    if (selected) return; // Prevent changing the answer after selection
+
+    const correctOption = currentQuestion.answer;
+    const selectedOption = document.getElementById(`option${option}`).nextElementSibling.textContent;
+
+    if (selectedOption === correctOption) {
+        score++;
+        document.getElementById('result').textContent = 'Correct!';
+    } else {
+        document.getElementById('result').textContent = 'Incorrect.';
+    }
+
+    document.querySelectorAll('input[name="option"]').forEach(input => input.disabled = true); // Disable options
+    document.getElementById('score').textContent = `Score: ${score}`;
+    document.getElementById('next').disabled = false;
+
+    selected = true; // Mark selection as made
+}
+
+// Move to the next question
+function nextQuestion() {
+    currentIndex++;
+    loadQuestion();
+}
+
+// Update and display the leaderboard
+function updateLeaderboard() {
+    leaderboard.push({ score });
+    leaderboard.sort((a, b) => b.score - a.score);
+    const leaderboardList = document.getElementById('leaderboard-list');
+    leaderboardList.innerHTML = '';
+    leaderboard.forEach((entry, index) => {
+        leaderboardList.innerHTML += `<li>${index + 1}. Score: ${entry.score}</li>`;
+    });
+}
+
+// Add event listener for the Start button
+document.getElementById('start-btn').addEventListener('click', startQuiz);
+
+// Initialize the quiz on window load (redirect to login first)
+window.onload = function() {
+    document.getElementById('login-page').style.display = 'block'; // Show login first
+    document.getElementById('quiz-page').style.display = 'none';
+};

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="form-container">
+        <h2>Create an Account</h2>
+        <form id="signup-form">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" placeholder="Enter your name" required>
+
+            <label for="email">Email/Mobile</label>
+            <input type="text" id="email" placeholder="Enter email or mobile number" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter password" required>
+
+            <button type="button" onclick="signUp()">Sign Up</button>
+        </form>
+        <p>Already have an account? <a href="login.html">Login here</a>.</p>
+    </div>
+
+    <script>
+        // Signup Function
+        function signUp() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Check if user already exists
+            if (localStorage.getItem(email)) {
+                alert("Account already exists! Please login.");
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Save user details to localStorage
+            const user = { name, email, password };
+            localStorage.setItem(email, JSON.stringify(user));
+
+            alert("Account created successfully! Please login.");
+            window.location.href = 'login.html'; // Redirect to login
+        }
+    </script>
+</body>
+</html>
